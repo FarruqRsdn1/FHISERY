@@ -6,20 +6,23 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #f4f7f6; /* Light background */
+  display: flex; /* Menggunakan flexbox untuk layout utama */
+  min-height: 100vh; /* Memastikan body mengisi seluruh tinggi viewport */
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
+/* Container utama tidak lagi diperlukan sebagai flex container untuk sidebar dan konten */
+/* .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+} */
 
 /* Hidden Class for JavaScript control */
 .hidden {
   display: none !important;
 }
 
-/* Login Page Styles */
+/* Login Page Styles (tetap tidak berubah) */
 .login-page,
 .register-page,
 .profile-page {
@@ -33,6 +36,7 @@ body {
     #cceeff
   ); /* Light blue gradient */
   padding: 20px;
+  width: 100%; /* Memastikan halaman login/register mengisi penuh */
 }
 
 .login-container,
@@ -151,33 +155,51 @@ body {
   text-decoration: underline;
 }
 
-/* Header Styles */
+/* Header Styles (Diubah menjadi Sidebar) */
 .header {
   background-color: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  padding: 15px 0;
-  position: sticky;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05); /* Shadow ke kanan */
+  padding: 25px 0; /* Padding vertikal */
+  position: fixed; /* Sidebar tetap di tempatnya */
+  left: 0;
   top: 0;
+  height: 100vh; /* Mengisi seluruh tinggi viewport */
+  width: 250px; /* Lebar sidebar */
   z-index: 1000;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 0; /* Hapus radius bawah */
+  display: flex;
+  flex-direction: column; /* Konten di dalam header menumpuk vertikal */
+  align-items: center; /* Pusatkan item secara horizontal */
+  overflow-y: auto; /* Memungkinkan scrolling jika konten sidebar terlalu panjang */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Sembunyikan scrollbar untuk Chrome, Safari dan Opera */
+.header::-webkit-scrollbar {
+  display: none;
 }
 
 .header-content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Konten di dalam header menumpuk vertikal */
+  align-items: center; /* Pusatkan item secara horizontal */
+  width: 100%;
+  padding: 0 20px; /* Padding horizontal di dalam header-content */
 }
 
 .header .logo {
   display: flex;
+  flex-direction: column; /* Logo dan nama aplikasi menumpuk vertikal */
   align-items: center;
+  margin-bottom: 30px; /* Jarak bawah logo */
 }
 
 .header .logo span {
-  font-size: 2.5em;
+  font-size: 3em; /* Ukuran ikon lebih besar */
   color: #007bff;
-  margin-right: 8px;
+  margin-right: 0; /* Hapus margin kanan */
+  margin-bottom: 10px; /* Jarak antara ikon dan teks */
 }
 
 .header .logo h1 {
@@ -185,6 +207,11 @@ body {
   font-weight: 700;
   color: #2c3e50;
   margin: 0;
+  text-align: center;
+}
+
+.nav {
+  width: 100%; /* Navigasi mengisi lebar sidebar */
 }
 
 .nav ul {
@@ -192,39 +219,65 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  align-items: center;
-  gap: 25px;
+  flex-direction: column; /* Item navigasi menumpuk vertikal */
+  align-items: flex-start; /* Rata kiri item navigasi */
+  gap: 15px; /* Jarak antar item navigasi */
+}
+
+.nav li {
+  width: 100%; /* Setiap item navigasi mengisi lebar penuh */
 }
 
 .nav a {
   text-decoration: none;
   color: #555;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 10px 15px; /* Padding untuk area klik yang lebih besar */
+  display: block; /* Memastikan link mengisi area padding */
+  border-radius: 8px; /* Sudut membulat untuk link */
 }
 
 .nav a:hover {
   color: #007bff;
+  background-color: #f0f8ff; /* Latar belakang saat hover */
 }
 
 .nav .username-display {
   font-weight: 600;
   color: #2c3e50;
-  margin-left: 15px;
+  margin-left: 0; /* Hapus margin kiri */
+  margin-top: 20px; /* Jarak dari item navigasi di atasnya */
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
 }
 
 .nav .btn.secondary-btn {
   background-color: #dc3545;
   color: #fff;
-  padding: 8px 18px;
+  padding: 10px 20px; /* Padding yang disesuaikan */
   border-radius: 50px;
   font-size: 0.9em;
   transition: background-color 0.3s ease;
+  width: calc(100% - 30px); /* Sesuaikan lebar tombol logout */
+  margin: 20px auto 0; /* Pusatkan tombol dan beri jarak atas */
+  display: block;
 }
 
 .nav .btn.secondary-btn:hover {
   background-color: #c82333;
   transform: translateY(-2px);
+}
+
+/* Main App Content Wrapper */
+#main-app-content {
+  margin-left: 250px; /* Beri ruang untuk sidebar */
+  flex-grow: 1; /* Konten utama mengisi sisa ruang */
+  overflow-y: auto; /* Memungkinkan scrolling untuk konten utama */
+  height: 100vh; /* Memastikan konten utama mengisi seluruh tinggi viewport */
+  padding-top: 0; /* Hapus padding-top dari header sebelumnya */
 }
 
 /* Hero Section */
@@ -235,8 +288,8 @@ body {
   padding: 100px 20px;
   position: relative;
   overflow: hidden;
-  margin-top: 20px; /* Space below header */
-  border-radius: 10px;
+  margin-top: 0; /* Hapus margin-top karena sidebar fixed */
+  border-radius: 0; /* Hapus radius karena tidak lagi di bawah header */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -844,38 +897,63 @@ section:last-of-type {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .header {
+    width: 100%;
+    height: auto;
+    position: relative; /* Sidebar menjadi relatif di layar kecil */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Kembali ke shadow bawah */
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
   .header-content {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row; /* Konten header kembali horizontal */
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
   }
 
   .header .logo {
-    margin-bottom: 15px;
+    flex-direction: row;
+    margin-bottom: 0;
+  }
+
+  .header .logo span {
+    margin-right: 8px;
+    margin-bottom: 0;
   }
 
   .nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
+    flex-direction: row; /* Navigasi kembali horizontal */
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap; /* Izinkan wrap jika terlalu banyak item */
   }
 
   .nav li {
-    width: 100%;
+    width: auto;
   }
 
-  .nav a,
-  .nav .btn {
-    display: block;
-    width: calc(100% - 20px);
-    text-align: left;
-    padding: 10px;
-    border-radius: 8px;
+  .nav a {
+    padding: 8px 15px;
+    text-align: center;
   }
 
   .nav .username-display {
-    margin-left: 0;
-    margin-bottom: 10px;
+    margin-left: 15px;
+    margin-top: 0;
+    border-top: none;
+    width: auto;
+  }
+
+  .nav .btn.secondary-btn {
+    width: auto;
+    margin: 0;
+  }
+
+  #main-app-content {
+    margin-left: 0; /* Hapus margin kiri di layar kecil */
+    height: auto; /* Biarkan tinggi konten menyesuaikan */
   }
 
   .hero {
