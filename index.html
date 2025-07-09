@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AquaLogistics - Login</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Font Inter dari Google Fonts untuk tipografi yang bersih -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Halaman Login - Akan ditampilkan secara default -->
+    <div class="login-page" id="login-page">
+      <div class="login-container">
+        <div class="logo">
+          <span>🐟</span>
+          <h1>AquaLogistics</h1>
+        </div>
+        <h2>Selamat Datang</h2>
+        <p>Silakan login untuk melanjutkan ke website.</p>
+        <form class="login-form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="admin" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="123" />
+          </div>
+          <button type="submit" class="btn primary-btn">Login</button>
+        </form>
+        <div id="login-message" class="message"></div>
+        <p class="switch-form-text">
+          Belum punya akun?
+          <a href="#" id="show-register-form">Daftar Sekarang</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Halaman Register - Akan disembunyikan secara default -->
+    <div class="register-page hidden" id="register-page">
+      <div class="register-container">
+        <div class="logo">
+          <span>🐟</span>
+          <h1>AquaLogistics</h1>
+        </div>
+        <h2>Daftar Akun Baru</h2>
+        <p>Isi data Anda untuk membuat akun.</p>
+        <form class="register-form">
+          <div class="form-group">
+            <label for="reg-name">Nama Lengkap</label>
+            <input
+              type="text"
+              id="reg-name"
+              placeholder="Nama Lengkap Anda"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-nik">NIK</label>
+            <input
+              type="text"
+              id="reg-nik"
+              placeholder="Nomor Induk Kependudukan"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-dob">Tanggal Lahir</label>
+            <input type="date" id="reg-dob" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-address">Alamat</label>
+            <textarea
+              id="reg-address"
+              rows="3"
+              placeholder="Alamat Lengkap Anda"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="reg-username">Username Baru</label>
+            <input
+              type="text"
+              id="reg-username"
+              placeholder="Username yang diinginkan"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Password Baru</label>
+            <input
+              type="password"
+              id="reg-password"
+              placeholder="Password yang diinginkan"
+              required
+            />
+          </div>
+          <button type="submit" class="btn primary-btn">Daftar</button>
+        </form>
+        <div id="register-message" class="message"></div>
+        <p class="switch-form-text">
+          Sudah punya akun? <a href="#" id="show-login-form">Login di sini</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Konten Utama Aplikasi - Akan disembunyikan hingga login berhasil -->
+    <div id="main-app-content" class="hidden">
+      <!-- Bagian Header -->
+      <header class="header">
+        <div class="container header-content">
+          <div class="logo">
+            <span>🐟</span>
+            <h1>AquaLogistics</h1>
+          </div>
+          <nav class="nav">
+            <ul>
+              <li><a href="#layanan">Layanan</a></li>
+              <li><a href="#tentang">Tentang Kami</a></li>
+              <li><a href="#kontak">Kontak</a></li>
+              <li><a href="#" id="products-link">Produk Kami</a></li>
+              <li><a href="#" id="fleet-link">Armada Pengangkutan</a></li>
+              <li><a href="#" id="schedule-link">Jadwal Angkut</a></li>
+              <li><a href="#" id="profile-link">Profil</a></li>
+              <li class="username-display hidden">
+                <span id="logged-in-username"></span>
+              </li>
+              <li>
+                <button id="logout-btn" class="btn secondary-btn">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Area untuk pesan umum aplikasi -->
+      <div id="app-message" class="message hidden"></div>
+
+      <!-- Halaman Profil Customer - Akan disembunyikan hingga login berhasil dan diakses via link -->
+      <div class="profile-page hidden" id="profile-page">
+        <div class="container profile-container">
+          <h2 class="section-title">Profil Pengguna</h2>
+          <div class="profile-info">
+            <div class="profile-detail">
+              <strong>Nama Lengkap:</strong> <span id="profile-name"></span>
+            </div>
+            <div class="profile-detail">
+              <strong>NIK:</strong> <span id="profile-nik"></span>
+            </div>
+            <div class="profile-detail">
+              <strong>Tanggal Lahir:</strong> <span id="profile-dob"></span>
+            </div>
+            <div class="profile-detail">
+              <strong>Alamat:</strong> <span id="profile-address"></span>
+            </div>
+            <div class="profile-detail">
+              <strong>Username:</strong>
+              <span id="profile-username-profile"></span>
+            </div>
+          </div>
+          <button id="back-to-main-btn" class="btn primary-btn">
+            Kembali ke Beranda
+          </button>
+        </div>
+      </div>
+
+      <!-- Halaman Produk Kami -->
+      <section id="produk" class="products-section hidden">
+        <div class="container">
+          <h2 class="section-title">Produk Kami</h2>
+          <div class="button-container">
+            <button
+              id="add-product-btn"
+              class="btn primary-btn add-item-btn hidden"
+            >
+              Tambah Produk Baru
+            </button>
+          </div>
+          <div class="products-grid" id="products-grid">
+            <!-- Product cards will be injected here by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Halaman Armada Pengangkutan -->
+      <section id="fleet" class="fleet-section hidden">
+        <div class="container">
+          <h2 class="section-title">Armada Pengangkutan Kami</h2>
+          <div class="button-container">
+            <button
+              id="add-vehicle-btn"
+              class="btn primary-btn add-item-btn hidden"
+            >
+              Tambah Kendaraan Baru
+            </button>
+          </div>
+          <div class="fleet-table-container">
+            <table class="fleet-table">
+              <thead>
+                <tr>
+                  <th>Nama Kendaraan</th>
+                  <th>Jenis Kendaraan</th>
+                  <th>Kapasitas (kg)</th>
+                  <th class="admin-only-header hidden">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="fleet-table-body">
+                <!-- Fleet data will be injected here by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Halaman Jadwal Angkut -->
+      <section id="schedule" class="schedule-section hidden">
+        <div class="container">
+          <h2 class="section-title">Jadwal Angkut</h2>
+          <div class="button-container">
+            <button
+              id="add-schedule-btn"
+              class="btn primary-btn add-item-btn hidden"
+            >
+              Tambah Jadwal Baru
+            </button>
+          </div>
+          <div class="schedule-table-container">
+            <table class="schedule-table">
+              <thead>
+                <tr>
+                  <th>Alamat</th>
+                  <th>Tanggal</th>
+                  <th>Jam</th>
+                  <th>Keterangan</th>
+                  <th class="admin-only-header-schedule hidden">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="schedule-table-body">
+                <!-- Schedule data will be injected here by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hero Section -->
+      <section class="hero" id="hero-section">
+        <div class="container hero-content">
+          <h2>Pengangkutan Ikan Segar, Aman, dan Cepat</h2>
+          <p>
+            Solusi logistik terpercaya untuk kebutuhan pengiriman ikan Anda,
+            menjaga kualitas dari kolam hingga tujuan.
+          </p>
+          <a href="#kontak" class="btn primary-btn"
+            >Mulai Pengiriman Sekarang</a
+          >
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section id="layanan">
+        <div class="container">
+          <h2 class="section-title">Layanan Kami</h2>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="icon">🚚</div>
+              <h3>Transportasi Darat</h3>
+              <p>
+                Pengiriman ikan hidup maupun beku menggunakan armada darat
+                modern dengan kontrol suhu optimal.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="icon">✈️</div>
+              <h3>Pengiriman Udara</h3>
+              <p>
+                Solusi cepat untuk pengiriman ikan ke destinasi jauh, memastikan
+                kesegaran optimal saat tiba.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="icon">🌡️</div>
+              <h3>Kontrol Suhu Terjamin</h3>
+              <p>
+                Armada dilengkapi dengan sistem kontrol suhu canggih untuk
+                menjaga kualitas ikan selama perjalanan.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="icon">📦</div>
+              <h3>Pengemasan Profesional</h3>
+              <p>
+                Ikan dikemas dengan standar tertinggi untuk meminimalkan stres
+                dan kerusakan selama transit.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="icon">⏱️</div>
+              <h3>Pengiriman Tepat Waktu</h3>
+              <p>
+                Komitmen kami adalah pengiriman yang efisien dan tepat waktu
+                sesuai jadwal yang disepakati.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="icon">🌐</div>
+              <h3>Jaringan Luas</h3>
+              <p>
+                Melayani berbagai wilayah dengan jaringan logistik yang luas dan
+                terintegrasi.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Us Section -->
+      <section id="tentang" class="about-section">
+        <div class="container">
+          <h2 class="section-title">Mengapa Memilih Kami?</h2>
+          <div class="about-content">
+            <p>
+              AquaLogistics didirikan dengan visi untuk menjadi mitra terdepan
+              dalam logistik pengangkutan ikan. Kami memahami pentingnya menjaga
+              kualitas dan kesegaran produk Anda. Dengan tim ahli, teknologi
+              terkini, dan komitmen terhadap kepuasan pelanggan, kami memastikan
+              setiap pengiriman berjalan lancar dan aman.
+            </p>
+            <p>
+              Kami berdedikasi untuk memberikan layanan yang efisien,
+              transparan, dan dapat diandalkan, sehingga Anda dapat fokus pada
+              bisnis utama Anda tanpa khawatir tentang pengiriman.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="kontak" class="contact-section">
+        <div class="container">
+          <h2 class="section-title">Hubungi Kami</h2>
+          <form class="contact-form">
+            <div class="form-group">
+              <label for="contact-name">Nama Lengkap</label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                placeholder="Masukkan nama Anda"
+              />
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                placeholder="Masukkan email Anda"
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Pesan Anda</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="Tulis pesan Anda di sini..."
+              ></textarea>
+            </div>
+            <div class="form-group text-center">
+              <button type="submit" class="btn primary-btn">Kirim Pesan</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container footer-content">
+          <p>
+            &copy; <span id="current-year"></span> AquaLogistics. Semua Hak
+            Dilindungi.
+          </p>
+          <div class="social-links">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Product Modal for Add/Edit -->
+    <div id="product-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modal-title">Tambah Produk Baru</h2>
+        <form id="product-form">
+          <input type="hidden" id="product-id" />
+          <!-- Hidden field for product ID -->
+          <div class="form-group">
+            <label for="product-name">Nama Ikan</label>
+            <input type="text" id="product-name" required />
+          </div>
+          <div class="form-group">
+            <label for="product-size">Ukuran Ikan</label>
+            <input
+              type="text"
+              id="product-size"
+              placeholder="e.g., 200-300 gr/ekor"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="product-price">Harga Ikan</label>
+            <input
+              type="text"
+              id="product-price"
+              placeholder="e.g., Rp 25.000/kg"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="product-photo">URL Foto Ikan</label>
+            <input
+              type="text"
+              id="product-photo"
+              placeholder="https://placehold.co/300x200/ADD8E6/000000?text=Ikan"
+              required
+            />
+          </div>
+          <button type="submit" class="btn primary-btn" id="save-product-btn">
+            Simpan Produk
+          </button>
+        </form>
+        <div id="product-form-message" class="message"></div>
+      </div>
+    </div>
+
+    <!-- Fleet Modal for Add/Edit -->
+    <div id="fleet-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-button-fleet">&times;</span>
+        <h2 id="fleet-modal-title">Tambah Kendaraan Baru</h2>
+        <form id="fleet-form">
+          <input type="hidden" id="vehicle-id" />
+          <!-- Hidden field for vehicle ID -->
+          <div class="form-group">
+            <label for="vehicle-name">Nama Kendaraan</label>
+            <input type="text" id="vehicle-name" required />
+          </div>
+          <div class="form-group">
+            <label for="vehicle-type">Jenis Kendaraan</label>
+            <input
+              type="text"
+              id="vehicle-type"
+              placeholder="e.g., Truk Box Pendingin"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="vehicle-capacity">Kapasitas (kg)</label>
+            <input
+              type="number"
+              id="vehicle-capacity"
+              placeholder="e.g., 5000"
+              required
+            />
+          </div>
+          <button type="submit" class="btn primary-btn" id="save-vehicle-btn">
+            Simpan Kendaraan
+          </button>
+        </form>
+        <div id="fleet-form-message" class="message"></div>
+      </div>
+    </div>
+
+    <!-- Schedule Modal for Add/Edit -->
+    <div id="schedule-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-button-schedule">&times;</span>
+        <h2 id="schedule-modal-title">Tambah Jadwal Baru</h2>
+        <form id="schedule-form">
+          <input type="hidden" id="schedule-id" />
+          <!-- Hidden field for schedule ID -->
+          <div class="form-group">
+            <label for="schedule-address">Alamat</label>
+            <input
+              type="text"
+              id="schedule-address"
+              placeholder="e.g., Jl. Contoh No. 123"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="schedule-date">Tanggal</label>
+            <input type="date" id="schedule-date" required />
+          </div>
+          <div class="form-group">
+            <label for="schedule-time">Jam</label>
+            <input type="time" id="schedule-time" required />
+          </div>
+          <div class="form-group">
+            <label for="schedule-notes">Keterangan</label>
+            <textarea
+              id="schedule-notes"
+              rows="3"
+              placeholder="e.g., Pengiriman ikan segar, gunakan truk pendingin"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn primary-btn" id="save-schedule-btn">
+            Simpan Jadwal
+          </button>
+        </form>
+        <div id="schedule-form-message" class="message"></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
