@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Referensi elemen-elemen UI
   const loginPage = document.getElementById("login-page");
   const registerPage = document.getElementById("register-page");
-  // const mainAppWrapper = document.getElementById('main-app-wrapper'); // REMOVED: Wrapper untuk sidebar dan konten utama
   const mainAppContent = document.getElementById("main-app-content"); // Konten utama
   const profilePage = document.getElementById("profile-page");
   const heroSection = document.getElementById("hero-section");
@@ -10,8 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const productsGrid = document.getElementById("products-grid");
   const fleetSection = document.getElementById("fleet");
   const fleetTableBody = document.getElementById("fleet-table-body");
-  const scheduleSection = document.getElementById("schedule");
-  const scheduleTableBody = document.getElementById("schedule-table-body");
+  // const scheduleSection = document.getElementById("schedule"); // Dihapus
+  // const scheduleTableBody = document.getElementById("schedule-table-body"); // Dihapus
 
   // Elemen-elemen form login
   const usernameInput = document.getElementById("username");
@@ -31,22 +30,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const registerMessage = document.getElementById("register-message");
   const showLoginFormLink = document.getElementById("show-login-form");
 
-  // Elemen-elemen halaman profil
+  // Elemen-elemen halaman profil (display mode)
   const profileName = document.getElementById("profile-name");
   const profileNIK = document.getElementById("profile-nik");
   const profileDOB = document.getElementById("profile-dob");
   const profileAddress = document.getElementById("profile-address");
+  const profilePhone = document.getElementById("profile-phone"); // New
+  const profileEmail = document.getElementById("profile-email"); // New
   const profileUsernameProfile = document.getElementById(
     "profile-username-profile"
   );
   const backToMainBtn = document.getElementById("back-to-main-btn");
+  const editProfileBtn = document.getElementById("edit-profile-btn"); // New
+  const profileDisplay = document.querySelector(".profile-display"); // New
+
+  // Elemen-elemen halaman profil (edit mode)
+  const profileEditForm = document.getElementById("profile-edit-form"); // New
+  const editNameInput = document.getElementById("edit-name"); // New
+  const editNikInput = document.getElementById("edit-nik"); // New
+  const editDobInput = document.getElementById("edit-dob"); // New
+  const editAddressInput = document.getElementById("edit-address"); // New
+  const editPhoneInput = document.getElementById("edit-phone"); // New
+  const editEmailInput = document.getElementById("edit-email"); // New
+  const currentPasswordInput = document.getElementById("current-password"); // New
+  const newPasswordInput = document.getElementById("new-password"); // New
+  const confirmNewPasswordInput = document.getElementById(
+    "confirm-new-password"
+  ); // New
+  const saveProfileBtn = document.querySelector(
+    "#edit-profile-form .primary-btn"
+  ); // New
+  const cancelEditProfileBtn = document.getElementById(
+    "cancel-edit-profile-btn"
+  ); // New
+  const profileFormMessage = document.getElementById("profile-form-message"); // New
 
   // Tombol logout di header
   const logoutBtn = document.getElementById("logout-btn");
   const profileLink = document.getElementById("profile-link");
   const productsLink = document.getElementById("products-link");
   const fleetLink = document.getElementById("fleet-link");
-  const scheduleLink = document.getElementById("schedule-link");
+  // const scheduleLink = document.getElementById("schedule-link"); // Dihapus
   const loggedInUsernameDisplay = document.getElementById("logged-in-username");
   const usernameDisplayContainer = loggedInUsernameDisplay
     ? loggedInUsernameDisplay.parentElement
@@ -80,24 +104,86 @@ document.addEventListener("DOMContentLoaded", () => {
   const addVehicleBtn = document.getElementById("add-vehicle-btn");
   const adminOnlyFleetHeader = document.querySelector(".admin-only-header");
 
-  // Elemen Modal Jadwal
-  const scheduleModal = document.getElementById("schedule-modal");
-  const closeScheduleModalButton = scheduleModal.querySelector(
-    ".close-button-schedule"
+  // Elemen Modal Jadwal (Dihapus)
+  // const scheduleModal = document.getElementById("schedule-modal");
+  // const closeScheduleModalButton = scheduleModal.querySelector(
+  //   ".close-button-schedule"
+  // );
+  // const scheduleForm = document.getElementById("schedule-form");
+  // const scheduleModalTitle = document.getElementById("schedule-modal-title");
+  // const scheduleIdInput = document.getElementById("schedule-id");
+  // const scheduleAddressInput = document.getElementById("schedule-address");
+  // const scheduleDateInput = document.getElementById("schedule-date");
+  // const scheduleTimeInput = document.getElementById("schedule-time");
+  // const scheduleNotesInput = document.getElementById("schedule-notes");
+  // const saveScheduleBtn = document.getElementById("save-schedule-btn");
+  // const scheduleFormMessage = document.getElementById("schedule-form-message");
+  // const addScheduleBtn = document.getElementById("add-schedule-btn");
+  // const adminOnlyScheduleHeader = document.querySelector(
+  //   ".admin-only-header-schedule"
+  // );
+
+  // Elemen Modal Pemesanan (Baru)
+  const orderModal = document.getElementById("order-modal");
+  const closeOrderModalButton = orderModal.querySelector(".close-button-order");
+  const orderForm = document.getElementById("order-form");
+  const orderModalTitle = document.getElementById("order-modal-title");
+  const orderProductIdInput = document.getElementById("order-product-id");
+  const orderRecordIdInput = document.getElementById("order-record-id"); // New: Hidden field for shipping record ID
+  const orderProductNameDisplay = document.getElementById(
+    "order-product-name-display"
   );
-  const scheduleForm = document.getElementById("schedule-form");
-  const scheduleModalTitle = document.getElementById("schedule-modal-title");
-  const scheduleIdInput = document.getElementById("schedule-id");
-  const scheduleAddressInput = document.getElementById("schedule-address");
-  const scheduleDateInput = document.getElementById("schedule-date");
-  const scheduleTimeInput = document.getElementById("schedule-time");
-  const scheduleNotesInput = document.getElementById("schedule-notes");
-  const saveScheduleBtn = document.getElementById("save-schedule-btn");
-  const scheduleFormMessage = document.getElementById("schedule-form-message");
-  const addScheduleBtn = document.getElementById("add-schedule-btn");
-  const adminOnlyScheduleHeader = document.querySelector(
-    ".admin-only-header-schedule"
+  const orderQuantityInput = document.getElementById("order-quantity"); // New: Quantity input
+  const orderPackingInput = document.getElementById("order-packing"); // New: Packing input
+  const orderDayInput = document.getElementById("order-delivery-day"); // New: Delivery Day input
+  const orderTimeInput = (document = document.getElementById(
+    "order-delivery-time"
+  )); // New: Delivery Time input
+  const orderNameInput = document.getElementById("order-name");
+  const orderAddressInput = document.getElementById("order-address");
+  const orderPhoneInput = document.getElementById("order-phone");
+  const saveOrderBtn = document.getElementById("save-order-btn");
+  const orderFormMessage = document.getElementById("order-form-message");
+
+  // Elemen Halaman Pengiriman (Baru)
+  const shippingPage = document.getElementById("shipping-page");
+  const shippingTableBody = document.getElementById("shipping-table-body");
+  const backToMainFromShippingBtn = document.getElementById(
+    "back-to-main-from-shipping-btn"
   );
+  const startShippingBtn = document.getElementById("start-shipping-btn"); // Tombol "Mulai Pengiriman Sekarang"
+
+  // Elemen Notifikasi Admin (Baru)
+  const adminNotificationBox = document.getElementById(
+    "admin-notification-box"
+  );
+  const adminNotificationTitle = document.getElementById(
+    "admin-notification-title"
+  );
+  const adminNotificationContent = document.getElementById(
+    "admin-notification-content"
+  );
+  const adminNotificationCloseBtn = document.getElementById(
+    "admin-notification-close-btn"
+  );
+  const adminNotificationsPage = document.getElementById(
+    "admin-notifications-page"
+  ); // New: Admin Notifications Page
+  const adminNotificationsList = document.getElementById(
+    "admin-notifications-list"
+  ); // New: List container for admin notifications
+  const noNotificationsMessage = document.querySelector(
+    ".no-notifications-message"
+  ); // New: Message for no notifications
+  const backToMainFromAdminNotificationsBtn = document.getElementById(
+    "back-to-main-from-admin-notifications-btn"
+  ); // New: Back button for admin notifications page
+  const adminNotificationsLink = document.getElementById(
+    "admin-notifications-link"
+  ); // New: Sidebar link for admin notifications
+  const adminNotificationsLinkMobile = document.getElementById(
+    "admin-notifications-link-mobile"
+  ); // New: Mobile header link for admin notifications
 
   // Kredensial login default (untuk admin)
   const DEFAULT_ADMIN_USERNAME = "admin";
@@ -107,7 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const REGISTERED_USERS_KEY = "registeredUsers";
   const PRODUCTS_KEY = "fishProducts";
   const FLEET_KEY = "fleetData";
-  const SCHEDULES_KEY = "shippingSchedules";
+  // const SCHEDULES_KEY = "shippingSchedules"; // Dihapus
+  const SHIPPING_RECORDS_KEY = "shippingRecords"; // New: Key for shipping records
 
   // Data produk (akan dimuat dari localStorage)
   let fishProducts = [];
@@ -115,8 +202,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Data armada (akan dimuat dari localStorage)
   let fleetData = [];
 
-  // Data jadwal (akan dimuat dari localStorage)
-  let shippingSchedules = [];
+  // Data jadwal (akan dimuat dari localStorage) (Dihapus)
+  // let shippingSchedules = [];
+
+  // Data catatan pengiriman (baru, akan dimuat dari localStorage)
+  let shippingRecords = [];
 
   // Fungsi untuk mendapatkan daftar user terdaftar dari localStorage
   function getRegisteredUsers() {
@@ -143,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
           size: "200-300 gr/ekor",
           price: "Rp 25.000/kg",
           photo: "https://placehold.co/300x200/ADD8E6/000000?text=Ikan+Nila",
+          averageWeight: 0.25, // Added average weight in kg
         },
         {
           id: "p2",
@@ -150,6 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
           size: "150-250 gr/ekor",
           price: "Rp 20.000/kg",
           photo: "https://placehold.co/300x200/ADD8E6/000000?text=Ikan+Lele",
+          averageWeight: 0.2, // Added average weight in kg
         },
         {
           id: "p3",
@@ -157,6 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
           size: "400-600 gr/ekor",
           price: "Rp 45.000/kg",
           photo: "https://placehold.co/300x200/ADD8E6/000000?text=Ikan+Gurame",
+          averageWeight: 0.5, // Added average weight in kg
         },
         {
           id: "p4",
@@ -164,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
           size: "250-350 gr/ekor",
           price: "Rp 30.000/kg",
           photo: "https://placehold.co/300x200/ADD8E6/000000?text=Ikan+Mas",
+          averageWeight: 0.3, // Added average weight in kg
         },
         {
           id: "p5",
@@ -171,6 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
           size: "300-400 gr/ekor",
           price: "Rp 28.000/kg",
           photo: "https://placehold.co/300x200/ADD8E6/000000?text=Ikan+Patin",
+          averageWeight: 0.35, // Added average weight in kg
         },
         {
           id: "p6",
@@ -179,6 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
           price: "Rp 70.000/kg",
           photo:
             "https://placehold.co/300x200/ADD8E6/000000?text=Udang+Vannamei",
+          averageWeight: 0.02, // Added average weight in kg (approx for shrimp size 40/50)
         },
       ];
       saveProducts(); // Simpan data default ke localStorage
@@ -228,7 +324,8 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(FLEET_KEY, JSON.stringify(fleetData));
   }
 
-  // Fungsi untuk memuat jadwal dari localStorage
+  // Fungsi untuk memuat jadwal dari localStorage (Dihapus)
+  /*
   function loadSchedules() {
     const schedules = localStorage.getItem(SCHEDULES_KEY);
     if (schedules) {
@@ -261,10 +358,29 @@ document.addEventListener("DOMContentLoaded", () => {
       saveSchedules(); // Simpan data default ke localStorage
     }
   }
+  */
 
-  // Fungsi untuk menyimpan jadwal ke localStorage
+  // Fungsi untuk menyimpan jadwal ke localStorage (Dihapus)
+  /*
   function saveSchedules() {
     localStorage.setItem(SCHEDULES_KEY, JSON.stringify(shippingSchedules));
+  }
+  */
+
+  // Fungsi untuk memuat catatan pengiriman dari localStorage (baru)
+  function loadShippingRecords() {
+    const records = localStorage.getItem(SHIPPING_RECORDS_KEY);
+    if (records) {
+      shippingRecords = JSON.parse(records);
+    } else {
+      shippingRecords = []; // Default empty array
+      saveShippingRecords();
+    }
+  }
+
+  // Fungsi untuk menyimpan catatan pengiriman ke localStorage (baru)
+  function saveShippingRecords() {
+    localStorage.setItem(SHIPPING_RECORDS_KEY, JSON.stringify(shippingRecords));
   }
 
   // Fungsi untuk memeriksa apakah pengguna yang login adalah admin
@@ -300,18 +416,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Fungsi untuk menampilkan notifikasi admin (baru)
+  function displayAdminNotification(title, content) {
+    if (adminNotificationBox) {
+      adminNotificationTitle.textContent = title;
+      adminNotificationContent.innerHTML = content; // Use innerHTML for formatted content
+      adminNotificationBox.classList.remove("hidden");
+    }
+  }
+
+  // Event listener untuk tombol tutup notifikasi admin
+  if (adminNotificationCloseBtn) {
+    adminNotificationCloseBtn.addEventListener("click", () => {
+      adminNotificationBox.classList.add("hidden");
+    });
+  }
+
   // Fungsi untuk menampilkan halaman utama aplikasi (selain profil, produk, armada, dan jadwal)
   function showMainContent() {
     // Sembunyikan semua section yang mungkin aktif
     profilePage.classList.add("hidden");
     productsSection.classList.add("hidden");
     fleetSection.classList.add("hidden");
-    scheduleSection.classList.add("hidden");
+    // scheduleSection.classList.add("hidden"); // Dihapus
+    shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+    adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
 
     // Tampilkan bagian-bagian utama website
     heroSection.style.display = "block";
     document.getElementById("layanan").style.display = "block";
-    document.getElementById("tentang").style.display = "block";
     document.getElementById("kontak").style.display = "block";
   }
 
@@ -320,14 +453,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Sembunyikan semua section yang mungkin aktif
     productsSection.classList.add("hidden");
     fleetSection.classList.add("hidden");
-    scheduleSection.classList.add("hidden");
+    // scheduleSection.classList.add("hidden"); // Dihapus
+    shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+    adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
     heroSection.style.display = "none";
     document.getElementById("layanan").style.display = "none";
-    document.getElementById("tentang").style.display = "none";
     document.getElementById("kontak").style.display = "none";
 
     profilePage.classList.remove("hidden");
     displayUserProfile();
+    toggleProfileEditMode(false); // Pastikan mode tampilan aktif secara default
   }
 
   // Fungsi untuk menampilkan halaman produk
@@ -335,10 +470,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Sembunyikan semua section yang mungkin aktif
     profilePage.classList.add("hidden");
     fleetSection.classList.add("hidden");
-    scheduleSection.classList.add("hidden");
+    // scheduleSection.classList.add("hidden"); // Dihapus
+    shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+    adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
     heroSection.style.display = "none";
     document.getElementById("layanan").style.display = "none";
-    document.getElementById("tentang").style.display = "none";
     document.getElementById("kontak").style.display = "none";
 
     productsSection.classList.remove("hidden");
@@ -350,29 +486,72 @@ document.addEventListener("DOMContentLoaded", () => {
     // Sembunyikan semua section yang mungkin aktif
     profilePage.classList.add("hidden");
     productsSection.classList.add("hidden");
-    scheduleSection.classList.add("hidden");
+    // scheduleSection.classList.add("hidden"); // Dihapus
+    shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+    adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
     heroSection.style.display = "none";
     document.getElementById("layanan").style.display = "none";
-    document.getElementById("tentang").style.display = "none";
     document.getElementById("kontak").style.display = "none";
 
     fleetSection.classList.remove("hidden");
     renderFleet(); // Render armada
   }
 
-  // Fungsi untuk menampilkan halaman jadwal
+  // Fungsi untuk menampilkan halaman jadwal (Dihapus)
+  /*
   function showScheduleContent() {
     // Sembunyikan semua section yang mungkin aktif
     profilePage.classList.add("hidden");
     productsSection.classList.add("hidden");
     fleetSection.classList.add("hidden");
+    shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+    adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
     heroSection.style.display = "none";
     document.getElementById("layanan").style.display = "none";
-    document.getElementById("tentang").style.display = "none";
     document.getElementById("kontak").style.display = "none";
+
+    // Halaman Jadwal Angkut hanya untuk Admin
+    if (!isAdminLoggedIn()) {
+      displayAppMessage("Anda tidak memiliki akses ke halaman ini.", true);
+      showMainContent(); // Redirect ke halaman utama
+      return;
+    }
 
     scheduleSection.classList.remove("hidden"); // Tampilkan halaman jadwal
     renderSchedules(); // Render jadwal
+  }
+  */
+
+  // Fungsi untuk menampilkan halaman pengiriman (baru)
+  function showShippingContent() {
+    // Sembunyikan semua section yang mungkin aktif
+    profilePage.classList.add("hidden");
+    productsSection.classList.add("hidden");
+    fleetSection.classList.add("hidden");
+    // scheduleSection.classList.add("hidden"); // Dihapus
+    adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
+    heroSection.style.display = "none";
+    document.getElementById("layanan").style.display = "none";
+    document.getElementById("kontak").style.display = "none";
+
+    shippingPage.classList.remove("hidden"); // Tampilkan halaman pengiriman
+    renderShippingRecords(); // Render catatan pengiriman
+  }
+
+  // Fungsi untuk menampilkan halaman notifikasi admin (baru)
+  function showAdminNotificationsPage() {
+    // Sembunyikan semua section yang mungkin aktif
+    profilePage.classList.add("hidden");
+    productsSection.classList.add("hidden");
+    fleetSection.classList.add("hidden");
+    // scheduleSection.classList.add("hidden"); // Dihapus
+    shippingPage.classList.add("hidden");
+    heroSection.style.display = "none";
+    document.getElementById("layanan").style.display = "none";
+    document.getElementById("kontak").style.display = "none";
+
+    adminNotificationsPage.classList.remove("hidden"); // Tampilkan halaman notifikasi admin
+    renderAdminNotifications(); // Render notifikasi
   }
 
   // Fungsi untuk memperbarui UI berdasarkan status login
@@ -418,7 +597,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Tampilkan/sembunyikan tombol tambah jadwal untuk admin
+      // Tampilkan/sembunyikan tombol tambah jadwal untuk admin (Dihapus)
+      /*
       if (addScheduleBtn) {
         if (isAdmin) {
           addScheduleBtn.classList.remove("hidden");
@@ -430,6 +610,44 @@ document.addEventListener("DOMContentLoaded", () => {
             adminOnlyScheduleHeader.classList.add("hidden"); // Hide header for actions
         }
       }
+      */
+
+      // Tampilkan/sembunyikan link notifikasi admin
+      if (adminNotificationsLink) {
+        if (isAdmin) {
+          adminNotificationsLink.classList.remove("hidden");
+        } else {
+          adminNotificationsLink.classList.add("hidden");
+        }
+      }
+      if (adminNotificationsLinkMobile) {
+        if (isAdmin) {
+          adminNotificationsLinkMobile.classList.remove("hidden");
+        } else {
+          adminNotificationsLinkMobile.classList.add("hidden");
+        }
+      }
+
+      // Sembunyikan link Jadwal Angkut untuk non-admin (Dihapus)
+      /*
+      if (scheduleLink) {
+        if (isAdmin) {
+          scheduleLink.classList.remove("hidden");
+        } else {
+          scheduleLink.classList.add("hidden");
+        }
+      }
+      // Sembunyikan link Jadwal Angkut mobile untuk non-admin
+      const scheduleLinkMobile = document.getElementById("schedule-link-mobile"); // Get the mobile link reference
+      if (scheduleLinkMobile) {
+        if (isAdmin) {
+          scheduleLinkMobile.classList.remove("hidden");
+        } else {
+          scheduleLinkMobile.classList.add("hidden");
+        }
+      }
+      */
+
       showMainContent(); // Pastikan konten utama ditampilkan setelah login
     } else {
       loginPage.classList.remove("hidden");
@@ -438,7 +656,9 @@ document.addEventListener("DOMContentLoaded", () => {
       profilePage.classList.add("hidden");
       productsSection.classList.add("hidden");
       fleetSection.classList.add("hidden");
-      scheduleSection.classList.add("hidden");
+      // scheduleSection.classList.add("hidden"); // Dihapus
+      shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+      adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
       document.title = "AquaLogistics - Login";
 
       // Sembunyikan username di navigasi
@@ -458,12 +678,33 @@ document.addEventListener("DOMContentLoaded", () => {
         if (adminOnlyFleetHeader) adminOnlyFleetHeader.classList.add("hidden");
       }
 
-      // Sembunyikan tombol tambah jadwal jika tidak login
+      // Sembunyikan tombol tambah jadwal jika tidak login (Dihapus)
+      /*
       if (addScheduleBtn) {
         addScheduleBtn.classList.add("hidden");
         if (adminOnlyScheduleHeader)
           adminOnlyScheduleHeader.classList.add("hidden");
       }
+      */
+
+      // Sembunyikan link notifikasi admin
+      if (adminNotificationsLink) {
+        adminNotificationsLink.classList.add("hidden");
+      }
+      if (adminNotificationsLinkMobile) {
+        adminNotificationsLinkMobile.classList.add("hidden");
+      }
+
+      // Sembunyikan link Jadwal Angkut untuk non-admin (Dihapus)
+      /*
+      if (scheduleLink) {
+        scheduleLink.classList.add("hidden");
+      }
+      const scheduleLinkMobile = document.getElementById("schedule-link-mobile"); // Get the mobile link reference
+      if (scheduleLinkMobile) {
+        scheduleLinkMobile.classList.add("hidden");
+      }
+      */
     }
   }
 
@@ -475,7 +716,9 @@ document.addEventListener("DOMContentLoaded", () => {
     profilePage.classList.add("hidden");
     productsSection.classList.add("hidden");
     fleetSection.classList.add("hidden");
-    scheduleSection.classList.add("hidden");
+    // scheduleSection.classList.add("hidden"); // Dihapus
+    shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+    adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
     registerForm.reset();
     registerMessage.textContent = "";
   }
@@ -488,7 +731,9 @@ document.addEventListener("DOMContentLoaded", () => {
     profilePage.classList.add("hidden");
     productsSection.classList.add("hidden");
     fleetSection.classList.add("hidden");
-    scheduleSection.classList.add("hidden");
+    // scheduleSection.classList.add("hidden"); // Dihapus
+    shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+    adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
     loginForm.reset();
     loginMessage.textContent = "";
   }
@@ -504,13 +749,41 @@ document.addEventListener("DOMContentLoaded", () => {
       profileNIK.textContent = userData.nik || "-";
       profileDOB.textContent = userData.dob || "-";
       profileAddress.textContent = userData.address || "-";
+      profilePhone.textContent = userData.phone || "-"; // New
+      profileEmail.textContent = userData.email || "-"; // New
       profileUsernameProfile.textContent = userData.username || "-";
+
+      // Isi form edit dengan data saat ini
+      editNameInput.value = userData.name || "";
+      editNikInput.value = userData.nik || "";
+      editDobInput.value = userData.dob || "";
+      editAddressInput.value = userData.address || "";
+      editPhoneInput.value = userData.phone || ""; // New
+      editEmailInput.value = userData.email || ""; // New
+      currentPasswordInput.value = ""; // Clear password fields
+      newPasswordInput.value = "";
+      confirmNewPasswordInput.value = "";
+      profileFormMessage.textContent = ""; // Clear any previous messages
     } else {
       profileName.textContent = "Tidak tersedia";
       profileNIK.textContent = "Tidak tersedia";
       profileDOB.textContent = "Tidak tersedia";
       profileAddress.textContent = "Tidak tersedia";
+      profilePhone.textContent = "Tidak tersedia"; // New
+      profileEmail.textContent = "Tidak tersedia"; // New
       profileUsernameProfile.textContent = "Tidak tersedia";
+    }
+  }
+
+  // Fungsi untuk beralih antara mode tampilan profil dan mode edit
+  function toggleProfileEditMode(isEditMode) {
+    if (isEditMode) {
+      profileDisplay.classList.add("hidden");
+      profileEditForm.classList.remove("hidden");
+    } else {
+      profileDisplay.classList.remove("hidden");
+      profileEditForm.classList.add("hidden");
+      displayUserProfile(); // Refresh display with current data
     }
   }
 
@@ -542,6 +815,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${adminActionsHtml}
             `;
       productsGrid.appendChild(productCard);
+
+      // Add click listener for non-admin users to open order modal
+      if (!isAdmin) {
+        productCard.addEventListener("click", () => {
+          openOrderModal(product);
+        });
+      }
     });
   }
 
@@ -585,7 +865,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Fungsi untuk merender data jadwal
+  // Fungsi untuk merender data jadwal (Dihapus)
+  /*
   function renderSchedules() {
     scheduleTableBody.innerHTML = ""; // Clear previous content
     const isAdmin = isAdminLoggedIn();
@@ -624,6 +905,117 @@ document.addEventListener("DOMContentLoaded", () => {
         adminOnlyScheduleHeader.classList.add("hidden");
       }
     }
+  }
+  */
+
+  // Fungsi untuk merender catatan pengiriman (baru)
+  function renderShippingRecords() {
+    shippingTableBody.innerHTML = ""; // Clear previous content
+    const isAdmin = isAdminLoggedIn(); // Check admin status
+
+    if (shippingRecords.length === 0) {
+      const noRecordsRow = document.createElement("tr");
+      noRecordsRow.innerHTML = `<td colspan="10" style="text-align: center; padding: 20px;">Belum ada catatan pengiriman.</td>`; // Updated colspan
+      shippingTableBody.appendChild(noRecordsRow);
+      return;
+    }
+
+    shippingRecords.forEach((record) => {
+      const row = document.createElement("tr");
+      row.dataset.recordId = record.id; // Store record ID in dataset
+
+      let actionButtons = ``; // Initialize empty for non-admins
+
+      // Only show edit/delete/set schedule buttons if admin
+      if (isAdmin) {
+        actionButtons += `
+          <button class="btn edit-btn" data-id="${record.id}">Edit</button>
+          <button class="btn delete-btn" data-id="${record.id}">Batal</button>
+        `;
+        if (!record.isScheduled) {
+          // Only show if not yet scheduled
+          actionButtons += `<button class="btn primary-btn set-schedule-btn" data-id="${record.id}">Atur Jadwal</button>`;
+        }
+      } else {
+        // For regular users, only show the "Batal" button if the order is not yet scheduled
+        // This allows users to cancel pending orders
+        if (!record.isScheduled) {
+          actionButtons += `<button class="btn delete-btn" data-id="${record.id}">Batal</button>`;
+        }
+      }
+
+      const statusText = record.isScheduled
+        ? "Jadwal Terkirim"
+        : "Menunggu Jadwal";
+      const statusClass = record.isScheduled
+        ? "status-scheduled"
+        : "status-pending";
+
+      row.innerHTML = `
+                <td>${record.customerName}</td>
+                <td>${record.customerAddress}</td>
+                <td>${record.customerPhone}</td>
+                <td>${record.productName}</td>
+                <td>${record.quantity} kg</td>
+                <td>${record.packing}</td>
+                <td>${record.deliveryDay || "-"}</td>
+                <td>${record.deliveryTime || "-"}</td>
+                <td><span class="status ${statusClass}">${statusText}</span></td>
+                <td class="shipping-actions">
+                    ${actionButtons}
+                </td>
+            `;
+      shippingTableBody.appendChild(row);
+    });
+  }
+
+  // Fungsi untuk merender notifikasi admin (baru)
+  function renderAdminNotifications() {
+    adminNotificationsList.innerHTML = ""; // Clear previous content
+
+    const newOrders = shippingRecords.filter((record) => !record.readByAdmin); // Filter for unread notifications
+
+    if (newOrders.length === 0) {
+      noNotificationsMessage.classList.remove("hidden");
+    } else {
+      noNotificationsMessage.classList.add("hidden");
+      // Sort by orderDate (newest first)
+      newOrders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+
+      newOrders.forEach((record) => {
+        const notificationCard = document.createElement("div");
+        notificationCard.classList.add("notification-card");
+        notificationCard.dataset.recordId = record.id;
+        notificationCard.innerHTML = `
+          <h3>Pesanan Baru: ${record.productName} (${record.quantity} kg)</h3>
+          <p><strong>Dari:</strong> ${record.customerName}</p>
+          <p><strong>Alamat:</strong> ${record.customerAddress}</p>
+          <p><strong>Telepon:</strong> ${record.customerPhone}</p>
+          <p><strong>Packing:</strong> ${record.packing}</p>
+          <p><strong>Pengiriman:</strong> ${record.deliveryDay} pukul ${record.deliveryTime}</p>
+          <p class="notification-date">Dipesan pada: ${record.orderDate}</p>
+          <button class="btn primary-btn mark-as-read-btn" data-id="${record.id}">Tandai Sudah Dibaca</button>
+        `;
+        adminNotificationsList.appendChild(notificationCard);
+      });
+    }
+  }
+
+  // Event delegation for "Mark as Read" button on admin notifications
+  if (adminNotificationsList) {
+    adminNotificationsList.addEventListener("click", (e) => {
+      const target = e.target;
+      if (target.classList.contains("mark-as-read-btn")) {
+        const recordId = target.dataset.id;
+        const recordIndex = shippingRecords.findIndex((r) => r.id === recordId);
+        if (recordIndex !== -1) {
+          shippingRecords[recordIndex].readByAdmin = true; // Mark as read
+          saveShippingRecords();
+          renderAdminNotifications(); // Re-render to remove the marked notification
+          displayAppMessage("Notifikasi ditandai sudah dibaca.", false);
+        }
+      }
+    });
   }
 
   // Fungsi untuk membuka modal produk (tambah/edit)
@@ -669,7 +1061,14 @@ document.addEventListener("DOMContentLoaded", () => {
       // Edit produk
       const productIndex = fishProducts.findIndex((p) => p.id === id);
       if (productIndex !== -1) {
-        fishProducts[productIndex] = { id, name, size, price, photo };
+        fishProducts[productIndex] = {
+          id,
+          name,
+          size,
+          price,
+          photo,
+          averageWeight: fishProducts[productIndex].averageWeight,
+        }; // Preserve averageWeight
         displayAppMessage("Produk berhasil diupdate!", false);
       }
     } else {
@@ -680,6 +1079,7 @@ document.addEventListener("DOMContentLoaded", () => {
         size,
         price,
         photo,
+        averageWeight: 0.1, // Default average weight for new products, can be edited later
       };
       fishProducts.push(newProduct);
       displayAppMessage("Produk baru berhasil ditambahkan!", false);
@@ -756,7 +1156,8 @@ document.addEventListener("DOMContentLoaded", () => {
     closeFleetModal();
   });
 
-  // Fungsi untuk membuka modal jadwal (tambah/edit)
+  // Fungsi untuk membuka modal jadwal (Dihapus)
+  /*
   function openScheduleModal(schedule = null) {
     scheduleForm.reset();
     scheduleFormMessage.textContent = ""; // Clear form message
@@ -770,17 +1171,21 @@ document.addEventListener("DOMContentLoaded", () => {
       scheduleTimeInput.value = schedule.time;
       scheduleNotesInput.value = schedule.notes;
     } else {
-      scheduleModalTitle.textContent = "Tambah Jadwal Baru";
+      modalTitle.textContent = "Tambah Jadwal Baru";
     }
     scheduleModal.classList.remove("hidden");
   }
+  */
 
-  // Fungsi untuk menutup modal jadwal
+  // Fungsi untuk menutup modal jadwal (Dihapus)
+  /*
   function closeScheduleModal() {
     scheduleModal.classList.add("hidden");
   }
+  */
 
-  // Fungsi untuk menambah atau mengedit jadwal
+  // Fungsi untuk menambah atau mengedit jadwal (Dihapus)
+  /*
   scheduleForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -819,6 +1224,88 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSchedules();
     closeScheduleModal();
   });
+  */
+
+  // Fungsi untuk membuka modal pemesanan (baru)
+  function openOrderModal(
+    data = null,
+    isEdit = false,
+    isSchedulingEdit = false
+  ) {
+    orderForm.reset();
+    orderFormMessage.textContent = ""; // Clear form message
+    orderProductIdInput.value = ""; // Reset product ID
+    orderRecordIdInput.value = ""; // Reset record ID
+
+    if (isEdit && data) {
+      // Edit mode for shipping record
+      orderModalTitle.textContent = "Edit Pesanan";
+      orderRecordIdInput.value = data.id; // Set record ID for editing
+      orderProductIdInput.value = data.productId || ""; // Set product ID if available
+      orderProductNameDisplay.value = data.productName || "";
+      orderQuantityInput.value = data.quantity || "";
+      orderPackingInput.value = data.packing || "plastik";
+      orderDayInput.value = data.deliveryDay || "";
+      orderTimeInput.value = data.deliveryTime || "";
+      orderNameInput.value = data.customerName || "";
+      orderAddressInput.value = data.customerAddress || "";
+      orderPhoneInput.value = data.customerPhone || "";
+      saveOrderBtn.textContent = "Simpan Perubahan";
+    } else if (isSchedulingEdit && data) {
+      // New: For admin to set schedule
+      orderModalTitle.textContent = "Atur Jadwal Pengiriman";
+      orderRecordIdInput.value = data.id;
+      orderProductIdInput.value = data.productId || "";
+      orderProductNameDisplay.value = data.productName || "";
+      orderQuantityInput.value = data.quantity || "";
+      orderPackingInput.value = data.packing || "plastik";
+      orderDayInput.value = data.deliveryDay || "";
+      orderTimeInput.value = data.deliveryTime || "";
+      orderNameInput.value = data.customerName || "";
+      orderAddressInput.value = data.customerAddress || "";
+      orderPhoneInput.value = data.customerPhone || "";
+      saveOrderBtn.textContent = "Simpan Jadwal & Beri Notifikasi";
+
+      // Disable fields that admin shouldn't change when setting schedule
+      orderProductNameDisplay.readOnly = true;
+      orderQuantityInput.readOnly = true;
+      orderPackingInput.disabled = true;
+      orderNameInput.readOnly = true;
+      orderAddressInput.readOnly = true;
+      orderPhoneInput.readOnly = true;
+    } else if (data) {
+      // New order mode from product card
+      orderModalTitle.textContent = "Formulir Pemesanan";
+      orderProductIdInput.value = data.id;
+      orderProductNameDisplay.value = data.name; // Display product name
+      orderQuantityInput.value = 1; // Default quantity to 1 kg
+      orderPackingInput.value = "plastik"; // Default packing
+      orderDayInput.value = ""; // Clear delivery day
+      orderTimeInput.value = ""; // Clear delivery time
+      saveOrderBtn.textContent = "Pesan Sekarang";
+
+      // Ensure fields are editable for new orders
+      orderProductNameDisplay.readOnly = true; // This should always be readonly as it's a display field
+      orderQuantityInput.readOnly = false;
+      orderPackingInput.disabled = false;
+      orderNameInput.readOnly = false;
+      orderAddressInput.readOnly = false;
+      orderPhoneInput.readOnly = false;
+    }
+    orderModal.classList.remove("hidden");
+  }
+
+  // Fungsi untuk menutup modal pemesanan (baru)
+  function closeOrderModal() {
+    orderModal.classList.add("hidden");
+    // Reset readonly/disabled states when closing the modal
+    orderProductNameDisplay.readOnly = true; // Always readonly
+    orderQuantityInput.readOnly = false;
+    orderPackingInput.disabled = false;
+    orderNameInput.readOnly = false;
+    orderAddressInput.readOnly = false;
+    orderPhoneInput.readOnly = false;
+  }
 
   // Event listener untuk tombol "Tambah Produk Baru"
   if (addProductBtn) {
@@ -845,19 +1332,25 @@ document.addEventListener("DOMContentLoaded", () => {
       const target = e.target;
       const productId = target.dataset.id;
 
-      if (target.classList.contains("edit-btn")) {
-        const productToEdit = fishProducts.find((p) => p.id === productId);
-        if (productToEdit) {
-          openProductModal(productToEdit);
-        }
-      } else if (target.classList.contains("delete-btn")) {
-        if (confirm("Apakah Anda yakin ingin menghapus produk ini?")) {
-          fishProducts = fishProducts.filter((p) => p.id !== productId);
-          saveProducts();
-          renderProducts();
-          displayAppMessage("Produk berhasil dihapus!", false);
+      // Only handle edit/delete if the target is one of these buttons AND user is admin
+      if (isAdminLoggedIn()) {
+        if (target.classList.contains("edit-btn")) {
+          const productToEdit = fishProducts.find((p) => p.id === productId);
+          if (productToEdit) {
+            openProductModal(productToEdit);
+          }
+        } else if (target.classList.contains("delete-btn")) {
+          // Replace confirm with custom message box or displayAppMessage
+          if (confirm("Apakah Anda yakin ingin menghapus produk ini?")) {
+            // Using confirm for simplicity, replace with custom modal if needed
+            fishProducts = fishProducts.filter((p) => p.id !== productId);
+            saveProducts();
+            renderProducts();
+            displayAppMessage("Produk berhasil dihapus!", false);
+          }
         }
       }
+      // Product card click for non-admin is handled by the renderProducts function
     });
   }
 
@@ -892,7 +1385,9 @@ document.addEventListener("DOMContentLoaded", () => {
           openFleetModal(vehicleToEdit);
         }
       } else if (target.classList.contains("delete-btn")) {
+        // Replace confirm with custom message box or displayAppMessage
         if (confirm("Apakah Anda yakin ingin menghapus kendaraan ini?")) {
+          // Using confirm for simplicity, replace with custom modal if needed
           fleetData = fleetData.filter((v) => v.id !== vehicleId);
           saveFleet();
           renderFleet();
@@ -902,26 +1397,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Event listener untuk tombol "Tambah Jadwal Baru"
+  // Event listener untuk tombol "Tambah Jadwal Baru" (Dihapus)
+  /*
   if (addScheduleBtn) {
     addScheduleBtn.addEventListener("click", () => {
       openScheduleModal();
     });
   }
+  */
 
-  // Event listener untuk tombol tutup modal jadwal
+  // Event listener untuk tombol tutup modal jadwal (Dihapus)
+  /*
   if (closeScheduleModalButton) {
     closeScheduleModalButton.addEventListener("click", closeScheduleModal);
   }
+  */
 
-  // Tutup modal jadwal jika klik di luar area konten modal
+  // Tutup modal jadwal jika klik di luar area konten modal (Dihapus)
+  /*
   window.addEventListener("click", (event) => {
     if (event.target === scheduleModal) {
       closeScheduleModal();
     }
   });
+  */
 
-  // Event delegation untuk tombol edit dan hapus pada tabel jadwal
+  // Event delegation untuk tombol edit dan hapus pada tabel jadwal (Dihapus)
+  /*
   if (scheduleTableBody) {
     scheduleTableBody.addEventListener("click", (e) => {
       const target = e.target;
@@ -935,13 +1437,213 @@ document.addEventListener("DOMContentLoaded", () => {
           openScheduleModal(scheduleToEdit);
         }
       } else if (target.classList.contains("delete-btn")) {
+        // Replace confirm with custom message box or displayAppMessage
         if (confirm("Apakah Anda yakin ingin menghapus jadwal ini?")) {
+          // Using confirm for simplicity, replace with custom modal if needed
           shippingSchedules = shippingSchedules.filter(
             (s) => s.id !== scheduleId
           );
           saveSchedules();
           renderSchedules();
           displayAppMessage("Jadwal berhasil dihapus!", false);
+        }
+      }
+    });
+  }
+  */
+
+  // Event listener untuk tombol close modal pemesanan (baru)
+  if (closeOrderModalButton) {
+    closeOrderModalButton.addEventListener("click", closeOrderModal);
+  }
+
+  // Tutup modal pemesanan jika klik di luar area konten modal (baru)
+  window.addEventListener("click", (event) => {
+    if (event.target === orderModal) {
+      closeOrderModal();
+    }
+  });
+
+  // Fungsi untuk menangani submit form pemesanan (baru)
+  orderForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const recordId = orderRecordIdInput.value; // Get the record ID if in edit mode
+    const productId = orderProductIdInput.value;
+    const productName = orderProductNameDisplay.value;
+    const orderQuantity = parseFloat(orderQuantityInput.value); // New: Get quantity as float
+    const orderPacking = orderPackingInput.value; // New: Get packing type
+    const deliveryDay = orderDayInput.value.trim(); // New: Get delivery day
+    const deliveryTime = orderTimeInput.value.trim(); // New: Get delivery time
+    const customerName = orderNameInput.value.trim();
+    const customerAddress = orderAddressInput.value.trim();
+    const customerPhone = orderPhoneInput.value.trim();
+
+    if (
+      !customerName ||
+      !customerAddress ||
+      !customerPhone ||
+      !orderQuantity ||
+      !orderPacking ||
+      !deliveryDay || // Validate new fields
+      !deliveryTime // Validate new fields
+    ) {
+      showMessage(orderFormMessage, "Semua kolom harus diisi.", true);
+      return;
+    }
+
+    if (isNaN(orderQuantity) || orderQuantity <= 0) {
+      showMessage(orderFormMessage, "Jumlah ikan harus angka positif.", true);
+      return;
+    }
+
+    if (recordId) {
+      // Edit existing shipping record (could be general edit or scheduling edit)
+      const recordIndex = shippingRecords.findIndex((r) => r.id === recordId);
+      if (recordIndex !== -1) {
+        const oldRecord = { ...shippingRecords[recordIndex] }; // Copy old record for comparison
+        shippingRecords[recordIndex] = {
+          ...oldRecord, // Keep existing properties
+          customerName,
+          customerAddress,
+          customerPhone,
+          productName,
+          quantity: orderQuantity,
+          packing: orderPacking,
+          deliveryDay,
+          deliveryTime,
+          // If admin is setting schedule, mark it as scheduled and read by admin
+          isScheduled: true, // Mark as scheduled
+          readByAdmin: true, // Mark as read by admin
+        };
+        saveShippingRecords();
+        renderShippingRecords(); // Re-render shipping records table
+
+        // If the schedule was just set (i.e., it wasn't scheduled before)
+        if (!oldRecord.isScheduled && isAdminLoggedIn()) {
+          displayAppMessage(
+            `Notifikasi jadwal pengiriman untuk pesanan ${productName} ke ${customerName} pada ${deliveryDay} pukul ${deliveryTime} telah dikirim ke pengguna.`,
+            false
+          );
+        } else {
+          displayAppMessage("Pesanan berhasil diupdate!", false);
+        }
+      }
+    } else {
+      // Add new shipping record
+      const loggedInUserData = JSON.parse(
+        sessionStorage.getItem(LOGGED_IN_USER_DATA_KEY)
+      );
+      const orderedByUsername = loggedInUserData
+        ? loggedInUserData.username
+        : "Guest"; // Store username of the person who ordered
+
+      const newShippingRecord = {
+        id: "ship" + Date.now(), // Simple unique ID
+        customerName,
+        customerAddress,
+        customerPhone,
+        productName, // Keep product name in record
+        quantity: orderQuantity,
+        packing: orderPacking,
+        deliveryDay, // Add new field
+        deliveryTime, // Add new field
+        orderDate: new Date().toISOString().slice(0, 10), // Current date
+        readByAdmin: false, // New: Mark as unread for admin
+        isScheduled: false, // New: Not scheduled yet
+        orderedBy: orderedByUsername, // New: Store who ordered this
+      };
+
+      shippingRecords.push(newShippingRecord);
+      displayAppMessage(
+        `Pesanan Anda untuk ${orderQuantity} kg ${productName} telah diterima! Kami akan segera menghubungi Anda. (Ini adalah demo, tidak ada pengiriman data ke server.)`,
+        false
+      );
+
+      // Tampilkan notifikasi ke admin (pop-up)
+      if (isAdminLoggedIn()) {
+        const notificationContent = `
+          <p><strong>Nama Pemesan:</strong> ${newShippingRecord.customerName}</p>
+          <p><strong>Alamat:</strong> ${newShippingRecord.customerAddress}</p>
+          <p><strong>Telepon:</strong> ${newShippingRecord.customerPhone}</p>
+          <p><strong>Produk:</strong> ${newShippingRecord.productName}</p>
+          <p><strong>Jumlah:</strong> ${newShippingRecord.quantity} kg</p>
+          <p><strong>Packing:</strong> ${newShippingRecord.packing}</p>
+          <p><strong>Hari Pengiriman:</strong> ${newShippingRecord.deliveryDay}</p>
+          <p><strong>Jam Pengiriman:</strong> ${newShippingRecord.deliveryTime}</p>
+          <p><strong>Tanggal Pesan:</strong> ${newShippingRecord.orderDate}</p>
+        `;
+        displayAdminNotification("Pesanan Baru Diterima!", notificationContent);
+        renderAdminNotifications(); // Update admin notifications page immediately
+      }
+    }
+
+    saveShippingRecords();
+    renderShippingRecords();
+    closeOrderModal();
+  });
+
+  // Event delegation for edit and delete buttons on shipping records table
+  if (shippingTableBody) {
+    shippingTableBody.addEventListener("click", (e) => {
+      const target = e.target;
+      const recordId = target.dataset.id;
+
+      if (target.classList.contains("edit-btn")) {
+        // Only allow admin to edit
+        if (isAdminLoggedIn()) {
+          const recordToEdit = shippingRecords.find((r) => r.id === recordId);
+          if (recordToEdit) {
+            openOrderModal(recordToEdit, true); // Open order modal in edit mode
+          }
+        } else {
+          displayAppMessage(
+            "Anda tidak memiliki izin untuk mengedit pesanan.",
+            true
+          );
+        }
+      } else if (target.classList.contains("delete-btn")) {
+        // Find the record to be deleted
+        const recordToDelete = shippingRecords.find((r) => r.id === recordId);
+
+        if (confirm("Apakah Anda yakin ingin membatalkan pesanan ini?")) {
+          // If the order was scheduled, send a notification to the admin
+          if (recordToDelete && recordToDelete.isScheduled) {
+            const notificationContent = `
+              <p><strong>Pesanan Dibatalkan:</strong> ${
+                recordToDelete.productName
+              } (${recordToDelete.quantity} kg)</p>
+              <p><strong>Oleh:</strong> ${recordToDelete.customerName}</p>
+              <p><strong>Alamat:</strong> ${recordToDelete.customerAddress}</p>
+              <p><strong>Telepon:</strong> ${recordToDelete.customerPhone}</p>
+              <p><strong>Jadwal Pengiriman:</strong> ${
+                recordToDelete.deliveryDay
+              } pukul ${recordToDelete.deliveryTime}</p>
+              <p class="notification-date">Dibatalkan pada: ${new Date()
+                .toISOString()
+                .slice(0, 10)}</p>
+            `;
+            displayAdminNotification(
+              "Pesanan Dibatalkan!",
+              notificationContent
+            );
+            renderAdminNotifications(); // Update admin notifications page
+          }
+
+          shippingRecords = shippingRecords.filter((r) => r.id !== recordId);
+          saveShippingRecords();
+          renderShippingRecords();
+          displayAppMessage("Pesanan berhasil dibatalkan!", false);
+        }
+      } else if (target.classList.contains("set-schedule-btn")) {
+        // New: Set Schedule button
+        if (isAdminLoggedIn()) {
+          const recordToSchedule = shippingRecords.find(
+            (r) => r.id === recordId
+          );
+          if (recordToSchedule) {
+            openOrderModal(recordToSchedule, false, true); // Open in scheduling edit mode
+          }
         }
       }
     });
@@ -984,6 +1686,8 @@ document.addEventListener("DOMContentLoaded", () => {
           nik: "N/A",
           dob: "N/A",
           address: "N/A",
+          phone: "N/A", // New
+          email: "admin@aqualogistics.com", // New
           username: DEFAULT_ADMIN_USERNAME,
           photo: null,
         })
@@ -1031,6 +1735,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = regUsernameInput.value.trim();
     const password = regPasswordInput.value.trim();
 
+    // New fields
+    const phone = ""; // Default empty, user can edit later
+    const email = ""; // Default empty, user can edit later
+
     if (!name || !nik || !dob || !address || !username || !password) {
       showMessage(registerMessage, "Semua kolom harus diisi.", true);
       return;
@@ -1062,6 +1770,8 @@ document.addEventListener("DOMContentLoaded", () => {
       nik,
       dob,
       address,
+      phone, // New
+      email, // New
       photo: null,
       username,
       password,
@@ -1094,6 +1804,104 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Event listener untuk tombol "Edit Profil"
+  if (editProfileBtn) {
+    editProfileBtn.addEventListener("click", () => {
+      toggleProfileEditMode(true); // Aktifkan mode edit
+    });
+  }
+
+  // Event listener untuk tombol "Batal" di form edit profil
+  if (cancelEditProfileBtn) {
+    cancelEditProfileBtn.addEventListener("click", () => {
+      toggleProfileEditMode(false); // Nonaktifkan mode edit
+    });
+  }
+
+  // Event listener untuk pengiriman form edit profil
+  if (profileEditForm) {
+    profileEditForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = editNameInput.value.trim();
+      const nik = editNikInput.value.trim();
+      const dob = editDobInput.value;
+      const address = editAddressInput.value.trim();
+      const phone = editPhoneInput.value.trim(); // New
+      const email = editEmailInput.value.trim(); // New
+      const currentPassword = currentPasswordInput.value;
+      const newPassword = newPasswordInput.value;
+      const confirmNewPassword = confirmNewPasswordInput.value;
+
+      // Ambil data user yang sedang login dari sessionStorage
+      let loggedInUserData = JSON.parse(
+        sessionStorage.getItem(LOGGED_IN_USER_DATA_KEY)
+      );
+
+      // Validasi input
+      if (!name || !nik || !dob || !address) {
+        showMessage(
+          profileFormMessage,
+          "Nama, NIK, Tanggal Lahir, dan Alamat harus diisi.",
+          true
+        );
+        return;
+      }
+
+      if (newPassword && newPassword !== confirmNewPassword) {
+        showMessage(
+          profileFormMessage,
+          "Password baru dan konfirmasi password tidak cocok.",
+          true
+        );
+        return;
+      }
+
+      // Jika user mencoba mengganti password, validasi password lama
+      if (newPassword && loggedInUserData.password !== currentPassword) {
+        showMessage(profileFormMessage, "Password lama salah.", true);
+        return;
+      }
+
+      // Update data user yang sedang login
+      loggedInUserData.name = name;
+      loggedInUserData.nik = nik;
+      loggedInUserData.dob = dob;
+      loggedInUserData.address = address;
+      loggedInUserData.phone = phone; // New
+      loggedInUserData.email = email; // New
+      if (newPassword) {
+        loggedInUserData.password = newPassword;
+      }
+
+      // Perbarui data di sessionStorage
+      sessionStorage.setItem(
+        LOGGED_IN_USER_DATA_KEY,
+        JSON.stringify(loggedInUserData)
+      );
+
+      // Perbarui data di localStorage (untuk user terdaftar)
+      let registeredUsers = getRegisteredUsers();
+      const userIndex = registeredUsers.findIndex(
+        (user) => user.username === loggedInUserData.username
+      );
+
+      if (userIndex !== -1) {
+        registeredUsers[userIndex] = loggedInUserData;
+        saveRegisteredUsers(registeredUsers);
+      } else if (loggedInUserData.username === DEFAULT_ADMIN_USERNAME) {
+        // Jika admin, tidak perlu update registeredUsers karena admin adalah default
+        // Data admin hanya disimpan di sessionStorage
+      }
+
+      showMessage(profileFormMessage, "Profil berhasil diperbarui!", false);
+      displayAppMessage("Profil berhasil diperbarui!", false);
+      setTimeout(() => {
+        toggleProfileEditMode(false); // Kembali ke mode tampilan setelah save
+      }, 1000);
+    });
+  }
+
   // Event listener untuk link "Produk Kami" di navigasi
   if (productsLink) {
     productsLink.addEventListener("click", (e) => {
@@ -1110,11 +1918,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Event listener untuk link "Jadwal Angkut" di navigasi
+  // Event listener untuk link "Jadwal Angkut" di navigasi (Dihapus)
+  /*
   if (scheduleLink) {
     scheduleLink.addEventListener("click", (e) => {
       e.preventDefault();
       showScheduleContent(); // Tampilkan halaman jadwal
+    });
+  }
+  */
+
+  // Event listener untuk tombol "Mulai Pengiriman Sekarang" di Hero Section (baru)
+  if (startShippingBtn) {
+    startShippingBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showShippingContent(); // Arahkan ke halaman pengiriman
     });
   }
 
@@ -1126,16 +1944,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Event listener untuk tombol "Kembali ke Beranda" di halaman pengiriman (baru)
+  if (backToMainFromShippingBtn) {
+    backToMainFromShippingBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showMainContent(); // Kembali ke halaman utama
+    });
+  }
+
+  // Event listener untuk link "Notifikasi Admin" (baru)
+  if (adminNotificationsLink) {
+    adminNotificationsLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      showAdminNotificationsPage(); // Tampilkan halaman notifikasi admin
+    });
+  }
+  if (adminNotificationsLinkMobile) {
+    adminNotificationsLinkMobile.addEventListener("click", (e) => {
+      e.preventDefault();
+      showAdminNotificationsPage(); // Tampilkan halaman notifikasi admin
+    });
+  }
+
+  // Event listener untuk tombol "Kembali ke Beranda" di halaman notifikasi admin (baru)
+  if (backToMainFromAdminNotificationsBtn) {
+    backToMainFromAdminNotificationsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showMainContent(); // Kembali ke halaman utama
+    });
+  }
+
   // Smooth scrolling untuk navigasi (di dalam konten utama)
   document.querySelectorAll("nav a").forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
-      // Pastikan ini bukan tombol logout, profil, produk, armada, atau jadwal
+      // Pastikan ini bukan tombol logout, profil, produk, armada, jadwal, atau mulai pengiriman
       if (
         this.id === "logout-btn" ||
         this.id === "profile-link" ||
         this.id === "products-link" ||
         this.id === "fleet-link" ||
-        this.id === "schedule-link"
+        // this.id === "schedule-link" || // Dihapus
+        this.id === "start-shipping-btn" || // Exclude the new button
+        this.id === "admin-notifications-link" || // Exclude new admin notifications link
+        this.id === "admin-notifications-link-mobile" // Exclude new admin notifications mobile link
       )
         return;
 
@@ -1145,14 +1996,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetElement = document.getElementById(targetId);
 
       if (targetElement) {
-        // Sembunyikan halaman profil, produk, armada, dan jadwal jika sedang ditampilkan
+        // Sembunyikan halaman profil, produk, armada, jadwal, dan pengiriman jika sedang ditampilkan
         profilePage.classList.add("hidden");
         productsSection.classList.add("hidden");
         fleetSection.classList.add("hidden");
-        scheduleSection.classList.add("hidden");
+        // scheduleSection.classList.add("hidden"); // Dihapus
+        shippingPage.classList.add("hidden"); // Sembunyikan halaman pengiriman
+        adminNotificationsPage.classList.add("hidden"); // Sembunyikan halaman notifikasi admin
         // Tampilkan kembali bagian-bagian utama website
         document.getElementById("layanan").style.display = "block";
-        document.getElementById("tentang").style.display = "block";
         document.getElementById("kontak").style.display = "block";
         heroSection.style.display = "block";
 
@@ -1183,10 +2035,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Panggil fungsi untuk memuat produk, armada, dan jadwal saat DOM selesai dimuat
+  // Panggil fungsi untuk memuat produk, armada, jadwal, dan catatan pengiriman saat DOM selesai dimuat
   loadProducts();
   loadFleet();
-  loadSchedules();
+  // loadSchedules(); // Dihapus
+  loadShippingRecords(); // Load shipping records
   // Panggil updateUI saat DOM selesai dimuat untuk memeriksa status login awal
   updateUI();
 });
